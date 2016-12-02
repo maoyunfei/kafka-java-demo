@@ -1,0 +1,36 @@
+group 'com.mao.kafka'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+buildscript {
+    repositories {
+        maven { url 'http://nexus.tiantong.com/nexus/content/groups/public' }
+        maven { url "https://repo.spring.io/libs-release" }
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+repositories {
+    mavenLocal()
+    maven { url 'http://nexus.tiantong.com/nexus/content/groups/public/' }
+    maven { url 'http://repo.spring.io/libs-release' }
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile("org.apache.kafka:kafka-clients:0.8.2.1")
+    compile("com.google.code.gson:gson:2.3.1")
+    compile("org.apache.kafka:kafka_2.10:0.8.2.1") {
+        exclude module: 'slf4j-log4j12'
+    }
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.9'
+}
+
