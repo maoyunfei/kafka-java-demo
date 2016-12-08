@@ -26,6 +26,7 @@ public class SimpleKafkaConsumer {
         Properties props = new Properties();
         props.put("zookeeper.connect", "127.0.0.1:2181");
         props.put("group.id", "group-1");
+        props.put("auto.offset.reset","largest");
 
         ConsumerConfig config = new ConsumerConfig(props);
         ConsumerConnector consumer = Consumer.createJavaConsumerConnector(config);

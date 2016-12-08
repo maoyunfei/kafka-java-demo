@@ -1,8 +1,8 @@
 package com.mao.kafka;
 
-import kafka.javaapi.producer.Producer;
-import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,17 +25,19 @@ public class SimpleKafkaProducer {
 
         System.out.println("set config info(" + config + ") ok.");
 
-        Producer<String, String> procuder = new Producer<>(config);
+        KafkaProducer<String,String> producer = new KafkaProducer<String, String>(props);         //new api
+        //Producer<String, String> producer = new Producer<>(config);                            //old api
 
         String topic = "mytopic";
         for (int i = 1; i <= 10; i++) {
             String value = "value_" + i;
-            KeyedMessage<String, String> msg = new KeyedMessage<String, String>(topic, value);
-            procuder.send(msg);
+            ProducerRecord<String,String> msg=new ProducerRecord<String,String>(topic,value);       //new api
+            //KeyedMessage<String, String> msg = new KeyedMessage<String, String>(topic, value);   //old api
+            producer.send(msg);
         }
         System.out.println("send message over.");
 
-        procuder.close();
+        producer.close();
     }
 
     /**
