@@ -25,16 +25,16 @@ public class SimpleKafkaConsumer {
     private void execMsgConsume() {
         Properties props = new Properties();
         props.put("zookeeper.connect", "127.0.0.1:2181");
-        props.put("group.id", "group-1");
+        props.put("group.id", "group-A");
         props.put("auto.offset.reset","largest");
 
         ConsumerConfig config = new ConsumerConfig(props);
         ConsumerConnector consumer = Consumer.createJavaConsumerConnector(config);
 
         Map<String, Integer> topicCountMap = new HashMap<String, Integer>();
-        topicCountMap.put("mytopic", 1);
+        topicCountMap.put("topic-1", 1);
         Map<String, List<KafkaStream<byte[], byte[]>>> streamMap = consumer.createMessageStreams(topicCountMap);
-        KafkaStream<byte[], byte[]> kafkaStream = streamMap.get("mytopic").get(0);
+        KafkaStream<byte[], byte[]> kafkaStream = streamMap.get("topic-1").get(0);
         ConsumerIterator<byte[], byte[]> iterator = kafkaStream.iterator();
         while(iterator.hasNext()){
             MessageAndMetadata<byte[], byte[]> next = iterator.next();
